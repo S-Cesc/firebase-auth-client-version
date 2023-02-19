@@ -97,3 +97,12 @@ service cloud.firestore {
 }
 ~~~
 
+## Use the code
+
+It'd be easier to use the *Bootstrap Studio* file to append new pages, but it can be done also directly on the exported available version.
+
+- The *Bootstrap Studio* code can be found in the [firebase-auth grouped repositories](https://github.com/S-Cesc/firebase-auth)
+
+Usually pages will require user to be logged in, and the navegation code, verifications and validations would be similar to that on changemail.ejs.
+
+Remember always to use HTML5 input validations as long as they can be done that way, which is very often.
