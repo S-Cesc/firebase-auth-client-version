@@ -12,6 +12,12 @@ Use of serverless *Firebase Auth facilities*.
 2. Ensures a unique user profile name among registered users.
 3. Can be expanded to build any Firebase application.
 
+#### Limitations
+
+The design is for small applications which do not have a lot of entry points; but, of course, it can be changed to fit a bigger application.
+
+The use of client side pages means HTML is used directly, without templates nor other definitions to simplify design changes, and many changes need to be manually propagated among all the pages, or at least among many ones.
+
 ### Notes about using Firebase Auth serverless
 
 - Firebase auth Web REST calls are used.
@@ -25,12 +31,6 @@ Use of serverless *Firebase Auth facilities*.
 A browser application has public code, and no secret values. Our application uses Firebase backends, where user secret password is checked and then the user is authenticated. The authenticated user owns authoritations to read and write data.
 
 When some data can be read or written without an identified authenticated user there is a abuse risc of Firebase backends, which can be eased with the use of the *App-Check* implemented with *Google reCAPTCHA*. The *reCAPTCHA* function is to detect foreign programed executions (*robots*).
-
-#### Limitations
-
-The design is for small applications which do not have a lot of entry points; but, of course, it can be changed to fit a bigger application.
-
-The use of client side pages means HTML is used directly, without templates nor other definitions to simplify design changes, and many changes need to be manually propagated among all the pages, or at least among many ones.
 
 ## The firebase requeriments to use the code
 
