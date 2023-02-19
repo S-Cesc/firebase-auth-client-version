@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Auth Firebase</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono&amp;display=swap">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
+    <link rel="stylesheet" href="assets/css/Navbar-Right-Links-Dark-icons.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body style="font-family: 'Roboto Mono', monospace;">
+    <div class="container">
+        <header class="row">
+            <div class="col-md-12">
+                <nav class="navbar navbar-dark navbar-expand-lg bg-dark py-3">
+                    <div class="container-fluid"><a class="navbar-brand d-flex align-items-center" href="#"><span>Auth Firebase</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-5"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                        <div class="collapse navbar-collapse" id="navcol-5">
+                            <ul class="navbar-nav ms-auto">
+                                <li class="nav-item"><a class="nav-link" href="signin.html">SignIn</a></li>
+                                <li class="nav-item"><a class="nav-link" href="signup.html">SignUp</a></li>
+                                <li class="nav-item"><a class="nav-link active" href="recovery.html">Password</a></li>
+                                <li class="nav-item ocultar" id="changeEmail"><a class="nav-link" href="changemail.html">Email</a></li>
+                                <li class="nav-item ocultar" id="profileAccess"><a class="nav-link" href="profile.html">Profile</a></li>
+                                <li class="nav-item dropdown ocultar" id="dataAccess"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">Dropdown </a>
+                                    <div class="dropdown-menu"><a class="dropdown-item" href="#">Own data sumary</a><a class="dropdown-item" href="#">Search own data</a><a class="dropdown-item" href="#">Search data</a></div>
+                                </li>
+                                <li class="nav-item ocultar" id="logout"><a class="nav-link" id="logout_lnk" href="javascript:void(0);">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <main class="row">
+            <div class="col-md-8 offset-md-2 text-center" style="margin-top: 20px;"><i class="far fa-user" style="font-size: 30px;"></i>
+                <h1>Restablecer / Cambiar contraseña</h1>
+                <form><label class="form-label" for="email_txt">Email</label><input class="form-control" type="email" id="email_txt" required="" name="email_txt"><button class="btn btn-primary" id="recover_button" type="submit" style="background: var(--bs-teal);margin-top: 20px;">Enviar</button></form>
+                <div class="alert alert-warning ocultar" role="alert" id="alert_msg"><i class="fas fa-exclamation-circle alert-icon"></i><span class="alert-msg"><strong>Alert</strong> text.</span><small class="small" style="padding-left: 10px;">Text</small></div>
+            </div>
+        </main>
+        <footer class="row" style="border-top-style: solid;border-top-color: var(--bs-teal);">
+            <div class="col-md-4" style="text-align: center;"><span>Auth with Firebase</span></div>
+            <div class="col-md-4 text-center"><i class="fab fa-facebook-square" style="color: var(--bs-primary);"></i><i class="fab fa-instagram" style="margin: 4px;"></i><i class="fab fa-twitter" style="margin: 4px;"></i></div>
+            <div class="col-md-4" style="text-align: center;"><span>Grup CIEF @ 2023</span></div>
+        </footer>
+    </div>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/firebase.mjs" type="module"></script>
+    <script src="assets/js/general.mjs" type="module"></script>
+    <script src="assets/js/recovery.mjs" type="module"></script>
+    <script src="assets/js/transactions.mjs" type="module"></script>
+</body>
+
+</html>

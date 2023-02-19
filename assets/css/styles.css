@@ -1,0 +1,75 @@
+html, body {
+  height: 100%;
+}
+
+body > div.container {
+  display: flex !important;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* No hace falta, si flex-direction: column se aplica al container más concreto.
+Si se aplica a "container" tendremos que deshaceer el entuerto.
+nav>div.container {
+	flex-direction: row;
+} */
+
+main {
+  flex-grow: 1;
+}
+
+nav.navbar-dark {
+  background-color: var(--bs-teal) !important;
+}
+
+.form-label {
+  display: block;
+  text-align: left;
+}
+
+button:hover {
+  opacity: 0.75;
+}
+
+/* PRIMER INTENT; Després canvi a display: flex
+footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+} */
+
+/* .mostrar {
+  display: block;
+} */
+
+.ocultar {
+  display: none !important;
+}
+
+.password {
+  padding-right: 25px;
+}
+
+.password-container {
+  position: relative;
+}
+
+.password-icon {
+  position: absolute;
+  top: 10px;
+  right: 5px;
+}
+
+span.link {
+  display: inline;
+  margin-left: 2em;
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+}
+
+span.link:hover {
+  text-decoration: none;
+  text-shadow: 1px 1px 1px #555;
+}
+

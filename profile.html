@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Auth Firebase</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono&amp;display=swap">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
+    <link rel="stylesheet" href="assets/css/Navbar-Right-Links-Dark-icons.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body style="font-family: 'Roboto Mono', monospace;">
+    <div class="container">
+        <header class="row">
+            <div class="col-md-12">
+                <nav class="navbar navbar-dark navbar-expand-lg bg-dark py-3">
+                    <div class="container-fluid"><a class="navbar-brand d-flex align-items-center" href="#"><span>Auth Firebase</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-5"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                        <div class="collapse navbar-collapse" id="navcol-5">
+                            <ul class="navbar-nav ms-auto">
+                                <li class="nav-item"><a class="nav-link" href="signin.html">SignIn</a></li>
+                                <li class="nav-item"><a class="nav-link" href="signup.html">SignUp</a></li>
+                                <li class="nav-item"><a class="nav-link" href="recovery.html">Password</a></li>
+                                <li class="nav-item" id="changeEmail"><a class="nav-link" href="changemail.html">Email</a></li>
+                                <li class="nav-item" id="profileAccess"><a class="nav-link active" href="profile.html">Profile</a></li>
+                                <li class="nav-item dropdown" id="dataAccess"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">Dropdown </a>
+                                    <div class="dropdown-menu"><a class="dropdown-item" href="#">Own data sumary</a><a class="dropdown-item" href="#">Search own data</a><a class="dropdown-item" href="#">Search data</a></div>
+                                </li>
+                                <li class="nav-item" id="logout"><a class="nav-link" id="logout_lnk" href="javascript:void(0);">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <main class="row">
+            <div class="col-md-8 offset-md-2 text-center" style="margin-top: 20px; position: relative;">
+                <div style="display: flex; justify-content:space-between;"><img class="img-fluid" id="img_show" style="margin-left: 10px;margin-bottom: 40px;" alt="imagen del perfil">
+                    <div><i class="far fa-user ocultar" style="font-size: 30px;position: absolute;"></i>
+                        <h1 class="text-end" id="userName_title" style="margin-bottom: 0px;">Usuario</h1><span id="email_lbl" style="position: absolute;right: 0px;margin-right: 15px;">mail</span>
+                    </div>
+                </div>
+                <form><label class="form-label" for="name_txt" style="margin-top: 55px;">Nombre para mostrar</label><input class="form-control" type="text" id="name_txt" required="" minlength="2" name="name_txt"><small style="font-size: x-small;">El nombre permite a otros usuarios identificarte; es el dato mínimo que debes introducir en el perfil.</small><label class="form-label" for="img_url">URL de la imagen</label>
+                    <div style="position: relative;"><input class="form-control" type="url" id="img_url" style="padding-right: 180px;" name="img_url"><button class="btn btn-primary small" id="gravatar_button" type="button" style="background: var(--bs-teal);position: absolute;margin-bottom: 0px;margin-top: 0px; right:0px; top:0px;">Usar Gravatar</button></div>
+                    <div class="text-start"><span>Definir icono en&nbsp;</span><a href="https://es.gravatar.com/site/login" target="_blank"><span style="color: rgb(33, 37, 41);">Gravatar.com</span><br><br></a></div>
+                    <div id="send_zone" style="padding: 15px;border-style: solid;border-color: teal;"><label class="form-label" for="password_txt">Password</label>
+                        <div class="password-container" style="position: relative;"><i class="far fa-eye-slash password-icon" id="password_icon" style="position: absolute;"></i><input class="form-control" type="password" id="password_txt" style="padding-right: 36px;" required="" minlength="8" maxlength="24" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\\\-&quot;'¡¿·!@#~$%&amp;/()=?¿ _:;+*.,]).{8,24}" name="password_txt"></div><button class="btn btn-primary" id="profile_button" type="submit" style="background: var(--bs-teal);margin-top: 20px;">Enviar</button>
+                    </div>
+                </form>
+                <div class="alert alert-warning ocultar" role="alert" id="alert_msg"><i class="fas fa-exclamation-circle alert-icon"></i><span class="alert-msg"><strong>Alert</strong> text.</span><small class="small" style="padding-left: 10px;">Text</small></div>
+            </div>
+        </main>
+        <footer class="row" style="border-top-style: solid;border-top-color: var(--bs-teal);">
+            <div class="col-md-4" style="text-align: center;"><span>Auth with Firebase</span></div>
+            <div class="col-md-4 text-center"><i class="fab fa-facebook-square" style="color: var(--bs-primary);"></i><i class="fab fa-instagram" style="margin: 4px;"></i><i class="fab fa-twitter" style="margin: 4px;"></i></div>
+            <div class="col-md-4" style="text-align: center;"><span>Grup CIEF @ 2023</span></div>
+        </footer>
+    </div>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/firebase.mjs" type="module"></script>
+    <script src="assets/js/general.mjs" type="module"></script>
+    <script src="assets/js/md5.min.js"></script>
+    <script src="assets/js/profile.mjs" type="module"></script>
+    <script src="assets/js/transactions.mjs" type="module"></script>
+</body>
+
+</html>
