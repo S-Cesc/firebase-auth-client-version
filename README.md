@@ -38,7 +38,7 @@ The use of client side pages means HTML is used directly, without templates nor 
 
 The "***/assets/firebase.mjs.incompleto***" file has the web app's Firebase configuration, and the correct value must be set in that file. The file must then be renamed as "***/assets/firebase.mjs***".
 
-The ***firebase web app configuration and identification key*** will be stored server side; so, it will remain secret as long the server code remains secret. Anyway, as some site servers use ***public server code*** configurations, it is not a critical issue, as the ***web app's Firebase configuration can remain as a public file*** with no lost of security because of the use of the *Firestore Web API*, and as long as *Firebase Store Rules* are correctly configured.
+The ***firebase web app configuration and identification key*** is available in a public file, but it is not a critical issue, as the ***web app's Firebase configuration can remain as a public file*** with no lost of security because of the use of the *Firestore Web API*, and as long as *Firebase Store Rules* are correctly configured.
 
 ### Firestore configuration
 
