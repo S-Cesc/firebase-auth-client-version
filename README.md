@@ -12,6 +12,10 @@ Use of serverless *Firebase Auth facilities*.
 2. Ensures a unique user profile name among registered users.
 3. Can be expanded to build any Firebase application.
 
+#### Pending features
+
+1. Now only Firebase own authentication is implemented, and it is pending the use of other authoritation providers. I don't believe "the more the better", but having *Google* provider would be great, as well as *Yahoo* one, or *iPhone* for mobile.
+
 #### Limitations
 
 The design is for small applications which do not have a lot of entry points; but, of course, it can be changed to fit a bigger application.
