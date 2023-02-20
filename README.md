@@ -15,8 +15,11 @@ Use of serverless *Firebase Auth facilities*.
 #### Pending features
 
 1. Now only Firebase own authentication is implemented, and it is pending the use of other authoritation providers. I don't believe "the more the better", but having *Google* provider would be great, as well as *Yahoo* one, or *iPhone* for mobile.
+2. It'd be great to have different languages implemented:
+   1. First aproach would be duplicate all the pages, to allow each application to choose the language.
+   2. A more detailed approach would be to allow user to choose between languages; then, the application shoud choose which languages are implemented.
 
-#### Limitations
+    Anyway, it'd need to have different pages, one for each language. 
 
 The design is for small applications which do not have a lot of entry points; but, of course, it can be changed to fit a bigger application.
 
