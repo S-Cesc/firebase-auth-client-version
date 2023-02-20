@@ -1,4 +1,4 @@
-import { auth } from "./firebase.mjs";
+import { auth, appCheck, db } from "./firebase.mjs";
 import {
 	onAuthStateChanged,
 	setPersistence,
@@ -20,6 +20,7 @@ const password_element = document.getElementById("password_txt");
 const password2_element = document.getElementById("password2_txt");
 
 document.addEventListener("DOMContentLoaded", () => {
+	db.appCheck = appCheck;
 	toggleMenuOptions(null);
 	email_element.value = "";
 	password_element.value = "";

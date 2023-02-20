@@ -1,5 +1,5 @@
 
-import { auth, db } from "./firebase.mjs";
+import { auth, appCheck, db } from "./firebase.mjs";
 
 import {
     onAuthStateChanged,
@@ -40,6 +40,7 @@ const gravatar_button = document.getElementById("gravatar_button");
 const button = document.getElementById("profile_button");
 
 document.addEventListener("DOMContentLoaded", () => {
+	db.appCheck = appCheck;
     showPerfil(null);
     button.disabled = false;
 });

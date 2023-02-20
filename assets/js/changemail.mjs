@@ -1,4 +1,4 @@
-import { auth } from "./firebase.mjs";
+import { auth, appCheck, db } from "./firebase.mjs";
 import {
     onAuthStateChanged,
     EmailAuthProvider, reauthenticateWithCredential,
@@ -19,6 +19,7 @@ const password_element = document.getElementById("password_txt");
 const email2_element = document.getElementById("email2_txt");
 
 document.addEventListener("DOMContentLoaded", () => {
+	db.appCheck = appCheck;
     email_element.value = "";
     password_element.value = "";
     email2_element.value = "";

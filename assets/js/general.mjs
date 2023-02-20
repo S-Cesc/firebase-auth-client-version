@@ -11,31 +11,30 @@ export {
 	showMsg,
 	passordIconSwitchPasswordInputTypes,
 	removeAlertsOnClick,
+	passwordCustomValidity,
 	toggleMenuOptions,
 	emptyImg,
 	plainLowerCaseString
 }
 
-const removeAccents = (str) => {
-	return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-}
-
-const removeWhitespaces = (str) => {
-	return str.replace(/\s+/g, '');
-}
-
-const removeSymbolsAndNumbers = (str) => {
-	return str.replace(/(\d|[^a-zA-Z])+/g,'');
-}
-
-const plainLowerCaseString = (str) => {
-	return removeSymbolsAndNumbers(removeWhitespaces(removeAccents(str))).toLowerCase();
-}
 
 function emptyImg() {
     return "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==";
 }
 
+const plainLowerCaseString = (str) => {
+	const removeAccents = (str) => {
+		return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+	}
+	const removeWhitespaces = (str) => {
+		return str.replace(/\s+/g, '');
+	}
+	const removeSymbolsAndNumbers = (str) => {
+		return str.replace(/(\d|[^a-zA-Z])+/g, '');
+	}
+	if (str) return removeSymbolsAndNumbers(removeWhitespaces(removeAccents(str))).toLowerCase();
+	else return "";
+}
 
 /* Mostra msg en elemento con ID alertId. Dentro de alertId hay:
 - un elemento con la clase "alert-icon" que muestra icono según alertStyle (cambiando valor de la clase)
@@ -64,7 +63,6 @@ function showMsg(alertId, msg, alertStyle = AlertStyle.Warning, additionalInfo =
 		}, timeout)
 	}
 }
-
 
 /* fa servir classe .password-icon amb nextElementSibling input (password/text)
 	Mostra password en fer click en la icona
@@ -131,18 +129,46 @@ function alertIconClass(element, alertStyle) {
 	if (style) classList.add(style);
 }
 
+function passwordCustomValidity(inputElement, inputElement2 = null) {
+	if (inputElement.validity.valueMissing) {
+		inputElement.setCustomValidity("Es obligatória una contraseña.");
+	} else if (inputElement.validity.tooShort) {
+		inputElement.setCustomValidity("La contraseña es demasiado corta (mínimo 8 carácteres).");
+	} else if (inputElement.validity.tooLong) {
+		inputElement.setCustomValidity("La contraseña es demasiado larga. (máximo 24 carácteres).");
+	} else if (inputElement.validity.patternMismatch) {
+		inputElement.setCustomValidity("Las contraseñas deben tener al menos una mayúscula, una minúscula, un número y un símbolo.");
+	} else if (inputElement2?.value) {
+		if (inputElement.value != inputElement2.value) {
+			inputElement.setCustomValidity("Las contraseñas no coinciden.");
+		} else inputElement.setCustomValidity("");
+	} else inputElement.setCustomValidity("");
+}
+
+const mandatoryProfile = true;
+
 /* Hide some menu options before login */
 function toggleMenuOptions(user) {
+	const signin = document.getElementById("signin");
+	const signup = document.getElementById("signup");
 	const changeEmail = document.getElementById("changeEmail");
 	const profileAccess = document.getElementById("profileAccess");
 	const dataAccess = document.getElementById("dataAccess");
 	const logout = document.getElementById("logout");
 	if (user && user.emailVerified) {
+		if (signin) signin.classList.add("ocultar");
+		if (signup) signup.classList.add("ocultar");
 		if (changeEmail) changeEmail.classList.remove("ocultar");
 		if (profileAccess) profileAccess.classList.remove("ocultar");
-		if (dataAccess) dataAccess.classList.remove("ocultar");
 		if (logout) logout.classList.remove("ocultar");
+		if (dataAccess) {
+			if (mandatoryProfile && user.profile != "") {
+				dataAccess.classList.remove("ocultar");
+			} else dataAccess.classList.add("ocultar");
+		}
 	} else {
+		if (signin) signin.classList.remove("ocultar");
+		if (signup) signup.classList.remove("ocultar");
 		if (changeEmail) changeEmail.classList.add("ocultar");
 		if (profileAccess) profileAccess.classList.add("ocultar");
 		if (dataAccess) dataAccess.classList.add("ocultar");

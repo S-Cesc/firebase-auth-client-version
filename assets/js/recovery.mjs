@@ -3,7 +3,7 @@
   RECUPERAR CONTRASENYA FIREBASE:
 */
 
-import { auth } from "./firebase.mjs";
+import { auth, appCheck, db } from "./firebase.mjs";
 import {
 	onAuthStateChanged,
 	sendPasswordResetEmail,
@@ -19,15 +19,19 @@ import {
 const email_element = document.getElementById("email_txt");
 
 document.addEventListener("DOMContentLoaded", () => {
+	db.appCheck = appCheck;
 	email_element.value = "";
 });
 
 onAuthStateChanged(auth, (user) => {
+	const title = document.getElementById("title");
 	toggleMenuOptions(user);
 	if (user) {
-		email_element.value = user.email;
+		title.textContent = "Cambiar contraseña"
+		//email_element.value = user.email;
 	} else {
-		email_element.value = "";
+		//email_element.value = "";
+		title.textContent = "Restablecer contraseña"
 	}
 });
 
