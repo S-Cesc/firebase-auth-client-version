@@ -13,10 +13,14 @@ export {
 	removeAlertsOnClick,
 	passwordCustomValidity,
 	toggleMenuOptions,
+	removeSpacesAlsoNonbreakables,
 	emptyImg,
 	plainLowerCaseString
 }
 
+function removeSpacesAlsoNonbreakables(s) {
+	return s.replace(/[\x08-\x14\x20]+/g,'');
+}
 
 function emptyImg() {
     return "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==";

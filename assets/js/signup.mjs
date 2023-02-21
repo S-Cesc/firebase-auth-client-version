@@ -27,6 +27,14 @@ document.addEventListener("DOMContentLoaded", () => {
 	password2_element.value = "";
 });
 
+password_element.addEventListener("input", () => {
+	passwordCustomValidity(password_element, password2_element);
+});
+
+password2_element.addEventListener("input", () => {
+	passwordCustomValidity(password2_element, password_element);
+});
+
 onAuthStateChanged(auth, (user) => {
 	if (user) {
 		if (user.emailVerified) {

@@ -20,6 +20,7 @@ import {
     passordIconSwitchPasswordInputTypes,
     removeAlertsOnClick,
     toggleMenuOptions,
+    removeSpacesAlsoNonbreakables,
     emptyImg,
     plainLowerCaseString
 } from "./general.mjs";
@@ -40,9 +41,14 @@ const gravatar_button = document.getElementById("gravatar_button");
 const button = document.getElementById("profile_button");
 
 document.addEventListener("DOMContentLoaded", () => {
-	db.appCheck = appCheck;
+    db.appCheck = appCheck;
+    img_url.value = "\xA0";
     showPerfil(null);
     button.disabled = false;
+});
+
+password_txt.addEventListener("input", () => {
+    passwordCustomValidity(password_txt);
 });
 
 onAuthStateChanged(auth, (user) => {
@@ -54,13 +60,10 @@ const form = document.querySelector("form");
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const user = auth.currentUser;
-    const name = name_txt.value?.trim();
-    const password = password_txt.value;
-    if (password && name && password.trim() &&
-        password_txt.validity.valid &&
-        (img_url.value.trim() == "" || img_url.validity.valid) &&
-        (name_txt.value != user.providerData[0].displayName ||
-            img_url.value != user.providerData[0].photoURL)) {
+    const name = name_txt.value.trim();
+    if (name != user.providerData[0].displayName ||
+        img_url.value != user.providerData[0].photoURL) {
+        const password = password_txt.value;
         password_txt.value = "";
         button.disabled = true;
         send_zone.classList.add("ocultar");
@@ -68,6 +71,7 @@ form.addEventListener("submit", async (e) => {
             const credential = EmailAuthProvider.credential(user.email, password);
             try {
                 const userCredential = await reauthenticateWithCredential(user, credential);
+                button.disabled = false;
                 // User re-authenticated.
                 if (userCredential.user.emailVerified) {
                     try {
@@ -86,12 +90,14 @@ form.addEventListener("submit", async (e) => {
                 }
             }
             catch (e) {
-                showMsg("alert_msg", "ERROR AUTENTICACIÓN: " + error.message, AlertStyle.Danger, error.code);
+                button.disabled = false;
+                showMsg("alert_msg", "ERROR AUTENTICACIÓN: " + e.message, AlertStyle.Danger, e.code);
                 return false;
             }
         } else {
             try {
-                const userCredential = await signInWithEmailAndPassword(auth, email, password)
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                button.disabled = false;
                 // // Signed in 
                 if (userCredential.user.emailVerified) {
                     try {
@@ -110,15 +116,15 @@ form.addEventListener("submit", async (e) => {
                 }
             }
             catch (error) {
+                button.disabled = false;
                 showMsg("alert_msg", "ERROR AUTENTICACIÓN: " + error.message, AlertStyle.Danger, error.code);
                 return false;
             }
         }
     } else {
         password_txt.value = "";
-        button.disabled = true;
         send_zone.classList.add("ocultar");
-        showMsg("alert_msg", "Datos incorrectos.", AlertStyle.Warning);
+        showMsg("alert_msg", "Sin cambios.", AlertStyle.Warning);
         return false;
     }
 });
@@ -167,12 +173,10 @@ name_txt.addEventListener("change", async () => {
         const newDisplayName = plainLowerCaseString(name_txt.value);
         const newDisplayNameDoc = await getDoc(doc(db, "displayNames", newDisplayName));
         if (newDisplayNameDoc.exists()) {
-            button.disabled = true;
             send_zone.classList.add("ocultar");
             showMsg("alert_msg", "Este nombre ya existe", AlertStyle.Warning);
         }
         else {
-            button.disabled = false;
             send_zone.classList.remove("ocultar");
         }
 
@@ -181,36 +185,36 @@ name_txt.addEventListener("change", async () => {
     }
 });
 
-img_url.addEventListener("change", img_url_onchange);
-
-function img_url_onchange() {
+img_url.addEventListener("input", () => {
     const user = auth.currentUser;
-    if (user && img_url.value.trim() != user.providerData[0].photoURL) {
-        button.disabled = false;
-        send_zone.classList.remove("ocultar");
-        if (img_url.value && img_url.value.trim() != "") {
-            img_show.src = img_url.value;
-        } else {
-            img_show.src = emptyImg();
+    const name = name_txt.value.trim();
+    if (user && name != "") {
+        const imgUrlValue = removeSpacesAlsoNonbreakables(img_url.value);
+        if (imgUrlValue != user.providerData[0].photoURL) {
+            send_zone.classList.remove("ocultar");
+        } else if (name == user.providerData[0].displayName) {
+            send_zone.classList.add("ocultar");
         }
-    } else {
-        send_zone.classList.add("ocultar");
-        img_show.src = user.providerData[0].photoURL;
     }
-}
+});
+
+img_url.addEventListener("change", () => {
+    const imgUrlValue = removeSpacesAlsoNonbreakables(img_url.value);
+    if (imgUrlValue != "") {
+        img_show.src = imgUrlValue;
+    } else {
+        img_show.src = emptyImg();
+    }
+});
 
 gravatar_button.addEventListener("click", () => {
     const user = auth.currentUser;
     if (user && user.emailVerified) {
         img_url.value = "https://www.gravatar.com/avatar/" + md5(user.email.trim().toLowerCase());
+        img_show.src = img_url.value;
         if (user.providerData[0].photoURL
-            && user.providerData[0].photoURL.trim() != img_url.value) {
-            console.log(user.providerData[0].photoURL.trim());
-            console.log(img_url.value);
+            && user.providerData[0].photoURL != img_url.value) {
             img_url_onchange();
-        } else {
-            console.log(user.providerData[0].photoURL.trim());
-            console.log(img_url.value);
         }
     } else {
         showMsg("alert_msg", "Actualmente no hay usuario registrado en el sistema.", AlertStyle.Warning);
@@ -218,32 +222,33 @@ gravatar_button.addEventListener("click", () => {
 });
 
 function showPerfil(user) {
+    password_txt.value = "";
+    send_zone.classList.add("ocultar");
     if (user) {
         email_lbl.textContent = user.email + (user.emailVerified ? "" : " ?");
         name_txt.value = user.providerData[0].displayName;
-        img_url.value = user.providerData[0].photoURL;
-        send_zone.classList.add("ocultar");
-        if (name_txt.value && name_txt.value.trim()) {
+        if (name_txt.value && name_txt.value.trim() != "") {
             userName_title.textContent = name_txt.value;
+            img_url.value = user.providerData[0].photoURL;
+            if (img_url.value && img_url.value.trim() != "") {
+                img_show.src = user.providerData[0].photoURL;
+            }
+            else {
+                img_show.src = emptyImg();
+            }
         } else {
             userName_title.textContent = "Usuario";
-        }
-        if (img_url.value && img_url.value.trim() != "") {
-            img_show.src = user.providerData[0].photoURL;
-        }
-        else {
+            img_url.value = "\xA0"; // Avoid incorrect autocomplete impossible !!!
             img_show.src = emptyImg();
         }
     }
     else {
-        name_txt.value = "";
         email_lbl.textContent = "";
-        img_url.value = "";
+        name_txt.value = "";
+        img_url.value = "\xA0"; // Avoid incorrect autocomplete impossible !!!
         userName_title.textContent = "Usuario";
         img_show.src = emptyImg();
     }
-    password_txt.value = "";
-    send_zone.classList.add("ocultar");
 }
 
 const logout = document.getElementById("logout");
